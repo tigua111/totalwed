@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/logo.png?v=2" type="image/png">
+    <link rel="shortcut icon" href="/logo.png?v=2" type="image/png">
+    <link rel="apple-touch-icon" href="/logo.png?v=2">
+    <title>奇怪網站博物館</title>
+    <!-- 引入 Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- 引入自訂樣式 -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-indigo-500/30">
+    <div class="fixed left-4 top-4 z-50 rounded-full border border-indigo-500/20 bg-slate-900/80 px-3 py-1.5 text-sm font-medium text-slate-300 shadow-lg backdrop-blur">
+        網站製作:地瓜
+    </div>
+
+    <div class="fixed right-4 top-4 z-50 flex items-center gap-2">
+        <div id="settings-menu" class="hidden rounded-2xl border border-slate-800 bg-slate-900/90 p-2 shadow-xl backdrop-blur">
+            <button id="open-add-site-modal" type="button" class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-medium text-slate-200 transition hover:bg-slate-800">
+                <i data-lucide="plus-circle"></i>
+                <span>新增網站</span>
+            </button>
+            <button id="toggle-remove-mode" type="button" class="mt-1 flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-medium text-rose-300 transition hover:bg-slate-800">
+                <i data-lucide="trash-2"></i>
+                <span>移除網站</span>
+            </button>
+        </div>
+        <button id="settings-toggle" type="button" class="add-site-button inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-slate-900/85 px-3 py-2 text-sm font-medium text-indigo-200 shadow-lg backdrop-blur transition hover:-translate-y-0.5 hover:bg-indigo-500/20">
+            <i data-lucide="settings"></i>
+            <span>設定</span>
+        </button>
+    </div>
+
+    <div id="add-site-modal" class="add-site-modal fixed inset-0 z-[60] hidden items-center justify-center bg-slate-950/85 px-4 py-6 backdrop-blur-sm">
+        <div class="w-full max-w-xl rounded-3xl border border-slate-800 bg-slate-900/95 p-6 shadow-2xl">
+            <div class="mb-5 flex items-start justify-between gap-3">
+                <div>
+                    <p class="text-sm font-semibold uppercase tracking-[0.25em] text-indigo-300">新增網站</p>
+                    <h2 class="mt-1 text-xl font-semibold text-white">把你喜歡的新網站分享給大家(還沒上線共編功能，此為小編自用)</h2>
+                </div>
+                <button id="close-add-site-modal" type="button" class="rounded-full border border-slate-700 bg-slate-950/80 p-2 text-slate-300 transition hover:border-slate-500 hover:text-white">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <form id="add-site-form" class="space-y-4">
+                <label class="block text-sm text-slate-300">
+                    <span class="mb-2 block">網站連結</span>
+                    <input id="site-url" name="url" type="url" required class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2.5 text-sm text-white outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20" placeholder="https://example.com" />
+                </label>
+                <label class="block text-sm text-slate-300">
+                    <span class="mb-2 block">網站名稱</span>
+                    <input id="site-title" name="title" type="text" required class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2.5 text-sm text-white outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20" placeholder="例如：古代人模擬器" />
+                </label>
+                <label class="block text-sm text-slate-300">
+                    <span class="mb-2 block">網站介紹</span>
+                    <textarea id="site-description" name="description" rows="3" required class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2.5 text-sm text-white outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20" placeholder="簡單介紹這個網站做了什麼"></textarea>
+                </label>
+                <label class="block text-sm text-slate-300">
+                    <span class="mb-2 block">網站標籤（用逗號分隔）</span>
+                    <input id="site-tags" name="tags" type="text" class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2.5 text-sm text-white outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20" placeholder="例如：奇怪, 歷史, 模擬器" />
+                </label>
+                <label class="block text-sm text-slate-300">
+                    <span class="mb-2 block">網站縮略圖（可選擇資料夾中的照片）</span>
+                    <input id="site-thumbnail" name="thumbnail" type="file" accept="image/*" class="w-full rounded-xl border border-dashed border-slate-700 bg-slate-950/70 px-3 py-3 text-sm text-slate-300 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20" />
+                    <p class="mt-2 text-xs text-slate-500">可從你的電腦或資料夾中選擇圖片，選擇後會直接作為卡片縮圖顯示。</p>
+                </label>
+
+                <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800 pt-4">
+                    <p id="add-site-status" class="text-sm text-slate-400">新增後會直接出現在主頁卡片下方。</p>
+                    <button type="submit" class="inline-flex items-center gap-2 rounded-xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400">
+                        <i data-lucide="plus-circle"></i>
+                        新增網站
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Header Section -->
+    <header class="pt-24 pb-16 px-6 max-w-7xl mx-auto text-center opacity-0 translate-y-[-20px]" id="header">
+        <div class="inline-flex items-center justify-center space-x-3 mb-6 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-sm font-medium text-slate-400">
+            <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+            <span>本網站將持續更新</span>
+        </div>
+        <h1 class="hero-title text-4xl md:text-6xl font-bold tracking-tight text-white mb-6">
+            體驗不同古代名人悲慘的生活與<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">奇怪網站</span>
+        </h1>
+        <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            這裡是地瓜的網頁小市集，裡面記載了許多在IG上有名的古人模擬器以及奇怪小網站
+        </p>
+
+        <div class="mt-8 max-w-2xl mx-auto">
+            <div class="inline-flex items-center gap-2 rounded-full border border-indigo-500/20 bg-indigo-500/10 px-4 py-2 text-sm text-indigo-200 shadow-[0_0_25px_rgba(99,102,241,0.16)]">
+                <span class="ticker-badge h-2 w-2 rounded-full bg-emerald-400"></span>
+                <span>!!重要資訊!!</span>
+            </div>
+            <div class="mt-4 overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-900/60 px-5 py-4 shadow-lg backdrop-blur">
+                <div class="ticker-track flex items-center justify-center gap-3 text-sm md:text-base">
+                    <span class="text-indigo-300">✦</span>
+                    <span id="ticker-text" class="ticker-text is-visible min-h-[1.5rem] text-slate-100"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Grid Section -->
+    <main class="max-w-7xl mx-auto px-6 pb-24">
+        <div id="simulators-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards will be injected here by JavaScript -->
+        </div>
+    </main>
+
+    <section id="contact-section" class="contact-section mx-auto max-w-7xl px-6 pb-10 opacity-0 translate-y-10">
+        <div class="rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-900/90 to-indigo-950/60 p-8 shadow-[0_0_45px_rgba(99,102,241,0.12)]">
+            <div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+                <div class="max-w-2xl">
+                    <p class="mb-2 text-sm font-semibold uppercase tracking-[0.25em] text-indigo-300">聯絡我</p>
+                    <h2 class="text-2xl font-semibold text-white">想聊聊新點子、合作或是分享你的模擬器心得嗎？</h2>
+                    <p class="mt-3 text-sm leading-relaxed text-slate-400">填寫下面的表單，送出後會直接為你開啟郵件視窗，訊息會寄到指定信箱。</p>
+                </div>
+                <form id="contact-form" class="w-full max-w-xl rounded-2xl border border-slate-800/80 bg-slate-950/70 p-5 backdrop-blur">
+                    <div class="grid gap-4 md:grid-cols-2">
+                        <label class="block text-sm text-slate-300">
+                            <span class="mb-2 block">名字</span>
+                            <input id="contact-name" name="name" type="text" required class="w-full rounded-xl border border-slate-700 bg-slate-900/70 px-3 py-2.5 text-sm text-white outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20" placeholder="例如：阿明" />
+                        </label>
+                        <label class="block text-sm text-slate-300">
+                            <span class="mb-2 block">Email</span>
+                            <input id="contact-email" name="email" type="email" required class="w-full rounded-xl border border-slate-700 bg-slate-900/70 px-3 py-2.5 text-sm text-white outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20" placeholder="your@email.com" />
+                        </label>
+                        <label class="block md:col-span-2 text-sm text-slate-300">
+                            <span class="mb-2 block">電話號碼</span>
+                            <input id="contact-phone" name="phone" type="tel" class="w-full rounded-xl border border-slate-700 bg-slate-900/70 px-3 py-2.5 text-sm text-white outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20" placeholder="例如：0912-345-678" />
+                        </label>
+                        <label class="block md:col-span-2 text-sm text-slate-300">
+                            <span class="mb-2 block">想說的話</span>
+                            <textarea id="contact-message" name="message" rows="5" required class="w-full rounded-xl border border-slate-700 bg-slate-900/70 px-3 py-2.5 text-sm text-white outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20" placeholder="告訴我你的想法或需求..."></textarea>
+                        </label>
+                    </div>
+                    <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+                        <p id="contact-status" class="text-sm text-slate-400">送出後會直接寄到我的信箱。</p>
+                        <button type="submit" class="inline-flex items-center gap-2 rounded-xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400">
+                            <i data-lucide="send"></i>
+                            發送訊息
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 py-8 text-center text-slate-500 text-sm">
+        <p>&copy; 2026 模擬器大合集. 製作人:呂學恩(地瓜).</p>
+        <p>&copy; Logitech G優惠碼:LOGITIGUA</p>
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
+            <a href="https://www.instagram.com/tigua1107/reels/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full border border-pink-500/30 bg-pink-500/10 px-4 py-2 text-sm font-medium text-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-500/20 hover:shadow-lg">
+                <i data-lucide="instagram"></i>
+                <span>Instagram</span>
+            </a>
+            <a href="https://www.youtube.com/@OVStudio_1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm font-medium text-red-200 transition hover:-translate-y-0.5 hover:bg-red-500/20 hover:shadow-lg">
+                <i data-lucide="youtube"></i>
+                <span>YouTube</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- 引入主要邏輯腳本 -->
+    <script src="./script.js"></script>
+</body>
+</html>

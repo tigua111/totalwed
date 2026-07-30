@@ -1,0 +1,6 @@
+{
+  "name": "奇妙模擬器博物館",
+  "description": "收集了各種歷史、神話人物及奇幻體驗的模擬器網站。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

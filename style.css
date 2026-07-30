@@ -1,0 +1,199 @@
+/* 自訂樣式，大部分樣式已由 Tailwind 處理 */
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.ticker-track {
+    min-height: 1.75rem;
+}
+
+.ticker-text {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.ticker-text.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.ticker-text.is-hidden {
+    opacity: 0;
+    transform: translateY(-8px);
+}
+
+.ticker-badge {
+    animation: tickerPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes tickerPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.18);
+        opacity: 1;
+    }
+}
+
+.simulator-card {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ensure whole-card hover transform works even if Tailwind classes are not compiled at runtime */
+.simulator-card {
+    transition: transform 220ms cubic-bezier(.2,.9,.3,1), box-shadow 220ms ease;
+    transform-origin: center center;
+}
+
+.simulator-card:hover {
+    transform: translateY(-8px) scale(1.05);
+}
+
+.simulator-card::before {
+    content: "";
+    position: absolute;
+    inset: -100%;
+    background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.16) 45%, transparent 100%);
+    transform: rotate(18deg);
+    transition: transform 0.7s ease;
+    pointer-events: none;
+}
+
+.simulator-card:hover::before {
+    transform: translateX(220%) rotate(18deg);
+}
+
+.contact-card {
+    box-shadow: 0 0 0 rgba(99, 102, 241, 0);
+}
+
+.contact-card:hover {
+    box-shadow: 0 16px 40px rgba(99, 102, 241, 0.18);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-title {
+    animation: floatTitle 3s ease-in-out infinite;
+    will-change: transform;
+}
+
+@keyframes floatTitle {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.contact-section {
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.contact-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.add-site-button {
+    transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.add-site-button:hover {
+    transform: translateY(-2px);
+}
+
+.add-site-modal.is-open {
+    display: flex;
+}
+
+.remove-mode .simulator-card {
+    position: relative;
+}
+
+.remove-mode .simulator-card:hover {
+    transform: translateY(-4px) scale(1.02);
+}
+
+.remove-button {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(248, 113, 113, 0.35);
+    background: rgba(248, 113, 113, 0.15);
+    color: #fecaca;
+    animation: removePulse 1.2s ease-in-out infinite;
+    box-shadow: 0 0 18px rgba(248, 113, 113, 0.18);
+}
+
+.remove-button:hover {
+    background: rgba(248, 113, 113, 0.28);
+    transform: scale(1.08);
+}
+
+@keyframes removePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+.card-enter {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: cardEnter 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes cardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Card image positioning and hover behavior */
+.card-image {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    height: 7rem;
+    width: 7rem;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    transform: translateY(-50%);
+    transition: transform 200ms cubic-bezier(.2,.9,.3,1), box-shadow 200ms ease;
+    border: 1px solid rgba(148,163,184,0.12);
+    box-shadow: none;
+}
+
+@media (max-width: 767px) {
+    .card-image { display: none !important; }
+}
