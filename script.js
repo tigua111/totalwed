@@ -63,6 +63,15 @@ const simulators = [
     colorClasses: 'from-sky-500/20 to-cyan-600/20 text-sky-500 border-sky-500/30'
   },
   {
+    id: 'shonyan',
+    title: '商鞅模擬器',
+    description: '體驗商鞅變法把身體變五塊',
+    url: 'https://tigua111.github.io/SHONYAN/',
+    iconName: 'scale',
+    tags: ['變法', '五塊', '商鞅'],
+    colorClasses: 'from-sky-500/20 to-cyan-600/20 text-sky-500 border-sky-500/30'
+  },
+  {
     id: 'zji',
     title: '聚思日記',
     description: '讓異地情侶們有個互相傾訴的小空間',
@@ -179,7 +188,8 @@ function attachCardImage(card, sim) {
     'time-machine': '真正的時光機',
     'zilu': '子路',
     'zji': '聚思日記',
-    'time': '數位時光膠囊'
+    'time': '數位時光膠囊',
+    'shonyan': '商鞅'
   };
 
   const candidates = [];
