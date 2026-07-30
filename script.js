@@ -61,6 +61,24 @@ const simulators = [
     iconName: 'waves',
     tags: ['跳水', '獵奇', '意想不到'],
     colorClasses: 'from-sky-500/20 to-cyan-600/20 text-sky-500 border-sky-500/30'
+  },
+  {
+    id: 'zji',
+    title: '聚思日記',
+    description: '讓異地情侶們有個互相傾訴的小空間',
+    url: 'https://tigua111.github.io/ourpage1.0/index.html#',
+    iconName: 'history',
+    tags: ['愛情', '異地', '工具'],
+    colorClasses: 'from-cyan-500/20 to-teal-600/20 text-cyan-500 border-cyan-500/30'
+  },
+  {
+    id: 'time',
+    title: '數位時光膠囊',
+    description: '線上時光膠囊，記錄下現在的你，未來回來一起看看當初的你',
+    url: 'https://tigua111.github.io/-Digital-Time-Capsule/',
+    iconName: 'history',
+    tags: ['膠囊', '時光', '工具'],
+    colorClasses: 'from-cyan-500/20 to-teal-600/20 text-cyan-500 border-cyan-500/30'
   }
 ];
 
@@ -159,7 +177,9 @@ function attachCardImage(card, sim) {
     'bo-yikao': '伯邑考',
     'jesus': '耶穌',
     'time-machine': '真正的時光機',
-    'zilu': '子路'
+    'zilu': '子路',
+    'zji': '聚思日記',
+    'time': '數位時光膠囊'
   };
 
   const candidates = [];
@@ -379,14 +399,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     settingsToggle?.addEventListener('click', () => {
-      const password = window.prompt('請輸入設定密碼：');
-      if (password !== '951107') {
-        if (password !== null) {
-          window.alert('密碼錯誤，無法開啟設定。');
-        }
-        return;
-      }
-
       settingsMenu?.classList.toggle('hidden');
     });
 
