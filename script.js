@@ -465,7 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="space-y-3">
           <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
             <span class="log-date">2026-08-01</span>
-            <span class="log-detail">新增晉景公模擬器&新增了網頁類別區分</span>
+            <span class="log-detail">新增晉景公模擬器,李斯模擬器 & 新增了網頁類別區分</span>
           </div>
           <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
             <span class="log-date">2026-07-31</span>
@@ -488,7 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="space-y-4">
           <p class="text-slate-400">以下為留言區我看到的預計製作名單，實際製作未來將透過抽籤決定</p>
           <button id="ritual-button" type="button" class="ritual-button inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-indigo-500/20 bg-indigo-500/10 px-4 py-3 text-sm font-medium text-indigo-200 transition hover:bg-indigo-500/20">
-            <span>公布預計開發項目</span>
+            <span>公布預計開發項目(打勾為已製作上傳)</span>
           </button>
           <div id="ritual-steps" class="ritual-steps hidden space-y-3 pt-2">
             <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
