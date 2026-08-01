@@ -15,25 +15,28 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-indigo-500/30">
-    <div class="fixed left-4 top-4 z-50 rounded-full border border-indigo-500/20 bg-slate-900/80 px-3 py-1.5 text-sm font-medium text-slate-300 shadow-lg backdrop-blur">
-        網站製作:地瓜
-    </div>
-
-    <div class="fixed right-4 top-4 z-50 flex items-center gap-2">
-        <div id="settings-menu" class="hidden rounded-2xl border border-slate-800 bg-slate-900/90 p-2 shadow-xl backdrop-blur">
-            <button id="open-add-site-modal" type="button" class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-medium text-slate-200 transition hover:bg-slate-800">
-                <i data-lucide="plus-circle"></i>
-                <span>新增網站</span>
-            </button>
-            <button id="toggle-remove-mode" type="button" class="mt-1 flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-medium text-rose-300 transition hover:bg-slate-800">
-                <i data-lucide="trash-2"></i>
-                <span>移除網站</span>
-            </button>
-        </div>
-        <button id="settings-toggle" type="button" class="add-site-button inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-slate-900/85 px-3 py-2 text-sm font-medium text-indigo-200 shadow-lg backdrop-blur transition hover:-translate-y-0.5 hover:bg-indigo-500/20">
-            <i data-lucide="settings"></i>
-            <span>設定</span>
+    <div id="info-menu" class="fixed left-4 top-4 z-50 group">
+        <button id="info-menu-button" type="button" aria-expanded="false" aria-controls="info-panel" class="inline-flex h-12 w-12 flex-col gap-1 items-center justify-center rounded-3xl border border-indigo-500/20 bg-slate-900/90 text-slate-200 shadow-lg backdrop-blur transition hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-400/50">
+            <span class="sr-only">開啟資訊選單</span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
         </button>
+
+        <div id="info-panel" class="info-panel rounded-3xl border border-slate-800 bg-slate-950/95 text-slate-300 shadow-2xl backdrop-blur-xl">
+            <div class="flex items-center justify-between gap-2 border-b border-slate-800 bg-slate-900/90 p-3">
+                <div>
+                    <p class="text-xs uppercase tracking-[0.3em] text-indigo-300">功能清單</p>
+                    <p class="text-sm text-slate-400">滑鼠移入即展開</p>
+                </div>
+                <span class="inline-flex h-8 w-8 items-center justify-center rounded-2xl bg-indigo-500/10 text-indigo-300 text-xs">3</span>
+            </div>
+            <div class="grid gap-1 p-3">
+                <button type="button" class="info-tab active" data-tab="author">作者介紹</button>
+                <button type="button" class="info-tab" data-tab="changelog">更新日誌</button>
+                <button type="button" class="info-tab" data-tab="plan">預備開發模擬器順序</button>
+            </div>
+        </div>
     </div>
 
     <div id="add-site-modal" class="add-site-modal fixed inset-0 z-[60] hidden items-center justify-center bg-slate-950/85 px-4 py-6 backdrop-blur-sm">
@@ -81,6 +84,21 @@
             </form>
         </div>
     </div>
+
+    <div id="info-page" class="info-page hidden fixed inset-0 z-[70] items-center justify-center bg-slate-950/95 px-4 py-6 backdrop-blur-sm">
+        <div class="info-page-card relative w-full max-w-4xl overflow-hidden rounded-[2rem] border border-slate-800 bg-slate-900/95 shadow-2xl">
+            <div class="flex items-center justify-between gap-4 border-b border-slate-800 bg-slate-950/90 px-5 py-4">
+                <div>
+                    <p id="info-page-label" class="text-xs uppercase tracking-[0.3em] text-indigo-300">作者介紹</p>
+                    <h2 id="info-page-title" class="mt-1 text-2xl font-semibold text-white">作者資訊</h2>
+                </div>
+                <button id="info-page-close" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-3xl border border-slate-700 bg-slate-950 text-slate-300 transition hover:bg-slate-800">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div id="info-page-content" class="p-6 text-sm leading-relaxed text-slate-300"></div>
+        </div>
+    </div>
     <!-- Header Section -->
     <header class="pt-24 pb-16 px-6 max-w-7xl mx-auto text-center opacity-0 translate-y-[-20px]" id="header">
         <div class="inline-flex items-center justify-center space-x-3 mb-6 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-sm font-medium text-slate-400">
@@ -117,10 +135,31 @@
     </header>
 
     <!-- Grid Section -->
-    <main class="max-w-7xl mx-auto px-6 pb-24">
-        <div id="simulators-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Cards will be injected here by JavaScript -->
-        </div>
+    <main class="max-w-7xl mx-auto px-6 pb-24 space-y-16">
+        <section>
+            <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                    <p class="text-lg font-semibold uppercase tracking-[0.25em] text-indigo-300">奇怪模擬器</p>
+                    <p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-400">這裡收錄各種古代名人的地域梗模擬器，點擊卡片即可進入網站體驗。</p>
+                </div>
+            </div>
+            <div id="simulators-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 奇怪模擬器 卡片將由 JavaScript 注入 -->
+            </div>
+        </section>
+
+        <section>
+            <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                    <p class="text-lg font-semibold uppercase tracking-[0.25em] text-cyan-300">自創特色網站</p>
+                    <p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-400">以下為我自己設計的自架網站，歡迎體驗與給出評價。</p>
+                </div>
+            </div>
+            <div id="custom-simulators-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 自架特色網站 卡片將由 JavaScript 注入 -->
+            </div>
+            <p id="custom-simulators-empty" class="mt-4 rounded-2xl border border-slate-800 bg-slate-950/70 p-4 text-center text-sm text-slate-400 hidden">目前尚無自架特色網站，請使用新增網站功能新增。</p>
+        </section>
     </main>
 
     <section id="contact-section" class="contact-section mx-auto max-w-7xl px-6 pb-10 opacity-0 translate-y-10">
@@ -163,18 +202,28 @@
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-900 py-8 text-center text-slate-500 text-sm">
-        <p>&copy; 2026 模擬器大合集. 製作人:呂學恩(地瓜).</p>
-        <p>&copy; Logitech G優惠碼:LOGITIGUA</p>
-        <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
-            <a href="https://www.instagram.com/tigua1107/reels/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full border border-pink-500/30 bg-pink-500/10 px-4 py-2 text-sm font-medium text-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-500/20 hover:shadow-lg">
-                <i data-lucide="instagram"></i>
-                <span>Instagram</span>
-            </a>
-            <a href="https://www.youtube.com/@OVStudio_1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm font-medium text-red-200 transition hover:-translate-y-0.5 hover:bg-red-500/20 hover:shadow-lg">
-                <i data-lucide="youtube"></i>
-                <span>YouTube</span>
-            </a>
+    <footer class="border-t border-slate-900 py-8 text-slate-500 text-sm">
+        <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-center sm:gap-12">
+            <div class="text-center sm:text-left">
+                <div class="mt-3 flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+                    <a href="https://www.instagram.com/tigua1107/reels/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full border border-pink-500/30 bg-pink-500/10 px-4 py-2 text-sm font-medium text-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-500/20 hover:shadow-lg">
+                        <i data-lucide="instagram"></i>
+                        <span>Instagram</span>
+                    </a>
+                </div>
+            </div>
+            <div class="text-center sm:text-left">
+                <div class="mt-3 flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+                    <a href="https://www.youtube.com/@OVStudio_1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm font-medium text-red-200 transition hover:-translate-y-0.5 hover:bg-red-500/20 hover:shadow-lg">
+                        <i data-lucide="youtube"></i>
+                        <span>YouTube</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <p>&copy; 2026 模擬器大合集. 製作人:呂學恩(地瓜).</p>
+            <p>Logitech G優惠碼: LOGITIGUA</p>
         </div>
     </footer>
 
