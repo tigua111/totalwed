@@ -498,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <strong>2.</strong> 俞鴻圖 
             </div>
             <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>3.</strong> 李斯
+              <strong>3.</strong> 李斯 <span class="text-emerald-400 font-semibold ml-2">✓</span>
             </div>
             <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
               <strong>4.</strong> 司馬遷 
