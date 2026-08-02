@@ -474,6 +474,10 @@ document.addEventListener('DOMContentLoaded', () => {
       changelog: `
         <div class="space-y-3">
           <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
+            <span class="log-date">2026-08-02</span>
+            <span class="log-detail">新增希特勒模擬器</span>
+          </div>
+          <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
             <span class="log-date">2026-08-01</span>
             <span class="log-detail">新增晉景公模擬器&新增了網頁類別區分</span>
           </div>
