@@ -100,7 +100,7 @@ const simulators = [
   },
   {
     id: 'dongzhuo',
-    title: '董卓',
+    title: '董卓模擬器',
     description: '點燃董卓的肚子，看誰能燒最久?',
     url: 'https://dongzhuo.manus.space',
     iconName: 'waves',
@@ -540,7 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <strong>8.</strong> 拉瓦節的讀秒模擬器
             </div>  
             <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>9.</strong> 董卓
+              <strong>9.</strong> 董卓 <span class="text-emerald-400 font-semibold ml-2">✓</span>
             </div>  
             <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
               <strong>10.</strong> 趙雲七進七出
