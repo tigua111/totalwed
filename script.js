@@ -97,6 +97,15 @@ const simulators = [
     iconName: 'crown',
     tags: ['希特勒', '納粹', '罵人'],
     colorClasses: 'from-sky-500/20 to-cyan-600/20 text-sky-500 border-sky-500/30'
+  },
+  {
+    id: 'dongzhuo',
+    title: '董卓',
+    description: '點燃董卓的肚子，看誰能燒最久?',
+    url: 'https://dongzhuo.manus.space',
+    iconName: 'waves',
+    tags: ['燃燒', '肚子', '比賽'],
+    colorClasses: 'from-cyan-500/20 to-teal-600/20 text-cyan-500 border-cyan-500/30'
   }
 ];
 
@@ -237,7 +246,8 @@ function attachCardImage(card, sim) {
     'king': '晉景公',
     'Confession': '告白',
     'lisii' : '李斯',
-    'HitlerSimulator': '希特勒'
+    'HitlerSimulator': '希特勒',
+    'dongzhuo': '董卓'
   };
 
   const candidates = [];
