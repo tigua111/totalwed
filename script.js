@@ -136,6 +136,15 @@ const defaultCustomSimulators = [
     iconName: 'waves',
     tags: ['告白', '拒絕', '工具'],
     colorClasses: 'from-cyan-500/20 to-teal-600/20 text-cyan-500 border-cyan-500/30'
+  },
+  {
+    id: 'lision',
+    title: '傾聽網',
+    description: '跟素未謀面的人傾訴',
+    url: 'https://listeningweb.manus.space/',
+    iconName: 'history',
+    tags: ['傾訴', '傷心', '聊天'],
+    colorClasses: 'from-cyan-500/20 to-teal-600/20 text-cyan-500 border-cyan-500/30'
   }
 ];
 
@@ -247,7 +256,8 @@ function attachCardImage(card, sim) {
     'Confession': '告白',
     'lisii' : '李斯',
     'HitlerSimulator': '希特勒',
-    'dongzhuo': '董卓'
+    'dongzhuo': '董卓',
+    'lision': '傾聽網'
   };
 
   const candidates = [];
