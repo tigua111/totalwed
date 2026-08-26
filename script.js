@@ -145,6 +145,15 @@ const defaultCustomSimulators = [
     iconName: 'history',
     tags: ['傾訴', '傷心', '聊天'],
     colorClasses: 'from-cyan-500/20 to-teal-600/20 text-cyan-500 border-cyan-500/30'
+  },
+  {
+    id: 'school',
+    title: '校評集',
+    description: '選課前就了解老師的修課狀況!',
+    url: 'https://twprof-rat-3d5ck3dc.manus.space/?code=bMk2Sev6c623pXUpJVxzV2',
+    iconName: 'history',
+    tags: ['大學', '修課', '老師'],
+    colorClasses: 'from-cyan-500/20 to-teal-600/20 text-cyan-500 border-cyan-500/30'
   }
 ];
 
@@ -257,7 +266,8 @@ function attachCardImage(card, sim) {
     'lisii' : '李斯',
     'HitlerSimulator': '希特勒',
     'dongzhuo': '董卓',
-    'lision': '傾聽網'
+    'lision': '傾聽網',
+    'school': '校評網'
   };
 
   const candidates = [];
