@@ -267,7 +267,7 @@ function attachCardImage(card, sim) {
     'HitlerSimulator': '希特勒',
     'dongzhuo': '董卓',
     'lision': '傾聽網',
-    'school': '校評網'
+    'school': '校評集'
   };
 
   const candidates = [];
