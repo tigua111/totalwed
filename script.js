@@ -493,7 +493,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoPageClose = document.getElementById('info-page-close');
 
     const infoPanelHtml = {
-      author: 
+      author:`
         <div class="space-y-4">
           <div class="grid gap-3 md:grid-cols-[auto_1fr] items-center">
             <div class="rounded-3xl border border-slate-800 bg-slate-900/70 overflow-hidden aspect-square h-24 w-24 flex items-center justify-center">
