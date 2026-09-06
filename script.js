@@ -493,17 +493,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoPageClose = document.getElementById('info-page-close');
 
     const infoPanelHtml = {
-      author:`
-        <div class="space-y-4">
-          <div class="grid gap-3 md:grid-cols-[auto_1fr] items-center">
-            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 overflow-hidden aspect-square h-24 w-24 flex items-center justify-center">
-             <img 
-             src="./photos/author.jpg" 
-             alt="作者照片" 
-             class="w-full h-full object-cover" 
-             onerror="this.remove(); this.parentElement.innerHTML='<span class=\'text-xs uppercase tracking-[0.25em] text-slate-500\'>作者照片</span>';" 
-             />
-        </div>
+      author: `
+        <div class="space-y-4">
+          <div class="grid gap-3 md:grid-cols-[auto_1fr] items-center">
+            <div class="author-photo rounded-3xl border border-slate-800 bg-slate-900/70 text-slate-500 flex aspect-square h-24 items-center justify-center text-xs uppercase tracking-[0.25em]">
+              作者照片
+            </div>
             <div class="space-y-1">
               <p class="text-sm uppercase tracking-[0.25em] text-indigo-300">網站製作</p>
               <h3 class="text-lg font-semibold text-white">地瓜 / 呂學恩</h3>
