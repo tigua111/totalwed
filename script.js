@@ -106,6 +106,15 @@ const simulators = [
     iconName: 'crown',
     tags: ['希特勒', '納粹', '罵人'],
     colorClasses: 'from-sky-500/20 to-cyan-600/20 text-sky-500 border-sky-500/30'
+  },
+  {
+    id: 'lubo',
+    title: '呂布模擬器',
+    description: '三國版水果忍者',
+    url: 'https://lubuslice-msav56xh.manus.space',
+    iconName: 'crown',
+    tags: ['忍者', '呂布', '貂蟬'],
+    colorClasses: 'from-sky-500/20 to-cyan-600/20 text-sky-500 border-sky-500/30'
   }
 ];
 
@@ -267,7 +276,8 @@ function attachCardImage(card, sim) {
     'HitlerSimulator': '希特勒',
     'dongzhuo': '董卓',
     'lision': '傾聽網',
-    'school': '校評集'
+    'school': '校評集',
+    'lubo': '呂布'
   };
 
   const candidates = [];
@@ -483,12 +493,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoPageClose = document.getElementById('info-page-close');
 
     const infoPanelHtml = {
-      author: `
+      author: 
         <div class="space-y-4">
           <div class="grid gap-3 md:grid-cols-[auto_1fr] items-center">
-            <div class="author-photo rounded-3xl border border-slate-800 bg-slate-900/70 text-slate-500 flex aspect-square h-24 items-center justify-center text-xs uppercase tracking-[0.25em]">
-              作者照片
-            </div>
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 overflow-hidden aspect-square h-24 w-24 flex items-center justify-center">
+             <img 
+             src="./photos/author.jpg" 
+             alt="作者照片" 
+             class="w-full h-full object-cover" 
+             onerror="this.remove(); this.parentElement.innerHTML='<span class=\'text-xs uppercase tracking-[0.25em] text-slate-500\'>作者照片</span>';" 
+             />
+        </div>
             <div class="space-y-1">
               <p class="text-sm uppercase tracking-[0.25em] text-indigo-300">網站製作</p>
               <h3 class="text-lg font-semibold text-white">地瓜 / 呂學恩</h3>
@@ -503,6 +518,10 @@ document.addEventListener('DOMContentLoaded', () => {
       `,
       changelog: `
         <div class="space-y-3">
+          <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
+            <span class="log-date">2026-09-06</span>
+            <span class="log-detail">新增呂布模擬器</span>
+          </div>
           <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
             <span class="log-date">2026-08-20</span>
             <span class="log-detail">新增董卓模擬器&傾聽網</span>
