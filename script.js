@@ -209,7 +209,6 @@ function buildCardHTML(sim) {
   const bgFrom = colors[0];
   const bgTo = colors[1];
   const textCol = colors[2];
-  const borderCol = colors[3] || 'border-slate-800';
   const tagsHtml = (sim.tags || []).filter(Boolean).map(tag =>
     `<span class="px-2.5 py-1 text-xs font-medium rounded-md bg-slate-950 border border-slate-800 text-slate-300 group-hover:border-slate-700 transition-colors">#${tag}</span>`
   ).join('');
@@ -373,413 +372,418 @@ function renderSimulators(customSimulators, removeMode = false) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 觸發 Header 動畫
-    const header = document.getElementById('header');
-    header.classList.add('fade-in-up');
+  const header = document.getElementById('header');
+  header?.classList.add('fade-in-up');
 
-    const tickerText = document.getElementById('ticker-text');
-    const tickerMessages = [
-      '全新模擬器正在陸續上線，記得常回來看看最新內容。',
-      'Logitech G優惠碼:LOGITIGUA，全館享九折優惠!',
-      '如果你也有好點子，歡迎一起設計網站跟我分享討論!。',
-      '你們的留言我都有看，但有些珍很難做，再給我一點時間!',
-      '做事請有頭有尾，不要像路易十六',
-      '做個能隻手遮天的人，不要像耶穌一樣漏風',
-      '子路牌肉醬非常好吃',
-    ];
+  const tickerText = document.getElementById('ticker-text');
+  const tickerMessages = [
+    '全新模擬器正在陸續上線，記得常回來看看最新內容。',
+    'Logitech G優惠碼:LOGITIGUA，全館享九折優惠!',
+    '如果你也有好點子，歡迎一起設計網站跟我分享討論!。',
+    '你們的留言我都有看，但有些珍很難做，再給我一點時間!',
+    '做事請有頭有尾，不要像路易十六',
+    '做個能隻手遮天的人，不要像耶穌一樣漏風',
+    '子路牌肉醬非常好吃',
+  ];
 
-    if (tickerText) {
-      let tickerIndex = 0;
+  if (tickerText) {
+    let tickerIndex = 0;
 
-      const rotateTicker = () => {
-        tickerText.classList.remove('is-visible');
-        tickerText.classList.add('is-hidden');
+    const rotateTicker = () => {
+      tickerText.classList.remove('is-visible');
+      tickerText.classList.add('is-hidden');
 
-        setTimeout(() => {
-          tickerIndex = (tickerIndex + 1) % tickerMessages.length;
-          tickerText.textContent = tickerMessages[tickerIndex];
-          tickerText.classList.remove('is-hidden');
-          tickerText.classList.add('is-visible');
-        }, 350);
-      };
-
-      tickerText.textContent = tickerMessages[0];
-      tickerText.classList.add('is-visible');
-      setInterval(rotateTicker, 5000);
-    }
-
-    const contactSection = document.getElementById('contact-section');
-    if (contactSection) {
-      const revealContact = () => {
-        const rect = contactSection.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.9) {
-          contactSection.classList.add('is-visible');
-        }
-      };
-
-      revealContact();
-      window.addEventListener('scroll', revealContact, { passive: true });
-      window.addEventListener('resize', revealContact);
-    }
-
-    const contactForm = document.getElementById('contact-form');
-    const contactStatus = document.getElementById('contact-status');
-    const recipientEmail = 'xxuege@gmail.com';
-
-    if (contactForm && contactStatus) {
-      contactForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-
-        const formData = new FormData(contactForm);
-        const payload = {
-          name: formData.get('name')?.toString().trim() || '',
-          email: formData.get('email')?.toString().trim() || '',
-          phone: formData.get('phone')?.toString().trim() || '',
-          message: formData.get('message')?.toString().trim() || '',
-          _subject: '新留言來自奇妙模擬器博物館',
-          _captcha: 'false'
-        };
-
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-        if (submitButton) {
-          submitButton.disabled = true;
-          submitButton.innerHTML = '<i data-lucide="loader-circle" class="animate-spin"></i> 發送中...';
-          lucide.createIcons();
-        }
-
-        try {
-          const response = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify(payload)
-          });
-
-          if (!response.ok) {
-            throw new Error('送出失敗');
-          }
-
-          contactStatus.textContent = '訊息已成功送出，感謝你的聯絡。';
-          contactForm.reset();
-        } catch (error) {
-          contactStatus.textContent = '訊息送出時發生問題，請稍後再試。';
-        } finally {
-          if (submitButton) {
-            submitButton.disabled = false;
-            submitButton.innerHTML = '<i data-lucide="send"></i> 發送訊息';
-            lucide.createIcons();
-          }
-        }
-      });
-    }
-
-    let customSimulators = [...defaultCustomSimulators, ...loadCustomSimulators()];
-    let removeMode = false;
-
-    const renderCurrentView = () => {
-      renderSimulators(customSimulators, removeMode);
-      document.body.classList.toggle('remove-mode', removeMode);
+      setTimeout(() => {
+        tickerIndex = (tickerIndex + 1) % tickerMessages.length;
+        tickerText.textContent = tickerMessages[tickerIndex];
+        tickerText.classList.remove('is-hidden');
+        tickerText.classList.add('is-visible');
+      }, 350);
     };
 
-    renderCurrentView();
+    tickerText.textContent = tickerMessages[0];
+    tickerText.classList.add('is-visible');
+    setInterval(rotateTicker, 5000);
+  }
 
-    const infoTabButtons = document.querySelectorAll('#info-panel .info-tab');
-    const infoPage = document.getElementById('info-page');
-    const infoPageTitle = document.getElementById('info-page-title');
-    const infoPageLabel = document.getElementById('info-page-label');
-    const infoPageContent = document.getElementById('info-page-content');
-    const infoPageClose = document.getElementById('info-page-close');
-
-    const infoPanelHtml = {
-      author: `
-        <div class="space-y-4">
-          <div class="grid gap-3 md:grid-cols-[auto_1fr] items-center">
-            <div class="author-photo rounded-3xl border border-slate-800 bg-slate-900/70 text-slate-500 flex aspect-square h-24 items-center justify-center text-xs uppercase tracking-[0.25em]">
-              作者照片
-            </div>
-            <div class="space-y-1">
-              <p class="text-sm uppercase tracking-[0.25em] text-indigo-300">網站製作</p>
-              <h3 class="text-lg font-semibold text-white">地瓜 / 呂學恩</h3>
-              <p class="text-xs text-slate-500">奇怪模擬器的弄潮者，喜歡把古代人物做成奇怪遊戲。</p>
-            </div>
-          </div>
-          <div class="space-y-2 text-slate-400">
-            <p>這裡是我整理的模擬器合集與怪奇創意實驗室。未來會持續加入更多功能、故事與互動。</p>
-            <p>你可以把這個空間當成我的創作展示櫃，照片與更多介紹會在後續版本補上。</p>
-          </div>
-        </div>
-      `,
-      changelog: `
-        <div class="space-y-3">
-          <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
-            <span class="log-date">2026-09-06</span>
-            <span class="log-detail">新增呂布模擬器</span>
-          </div>
-          <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
-            <span class="log-date">2026-08-20</span>
-            <span class="log-detail">新增董卓模擬器&傾聽網</span>
-          </div>
-          <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
-            <span class="log-date">2026-08-02</span>
-            <span class="log-detail">新增希特勒模擬器</span>
-          </div>
-          <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
-            <span class="log-date">2026-08-01</span>
-            <span class="log-detail">新增晉景公模擬器&新增了網頁類別區分</span>
-          </div>
-          <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
-            <span class="log-date">2026-07-31</span>
-            <span class="log-detail">新增三條線下拉式選單與互動資訊面板。</span>
-            <span class="log-bug">BUG除錯：修正懸停選單消失問題。</span>
-          </div>
-          <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
-            <span class="log-date">2026-07-28</span>
-            <span class="log-detail">新增作者介紹與更新日誌格式展示。</span>
-            <span class="log-bug">BUG除錯：調整小尺寸視窗佈局。</span>
-          </div>
-          <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
-            <span class="log-date">2026-07-20</span>
-            <span class="log-detail">提高主頁卡片互動感，加入光暈效果。</span>
-            <span class="log-bug">BUG除錯：修正圖片載入閃爍。</span>
-          </div>
-        </div>
-      `,
-      plan: `
-        <div class="space-y-4">
-          <p class="text-slate-400">以下為留言區我看到的預計製作名單，實際製作未來將透過抽籤決定</p>
-          <button id="ritual-button" type="button" class="ritual-button inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-indigo-500/20 bg-indigo-500/10 px-4 py-3 text-sm font-medium text-indigo-200 transition hover:bg-indigo-500/20">
-            <span>公布預計開發項目</span>
-          </button>
-          <div id="ritual-steps" class="ritual-steps hidden space-y-3 pt-2">
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>1.</strong> 科比模擬器 
-            </div>
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>2.</strong> 俞鴻圖 
-            </div>
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>3.</strong> 李斯 <span class="text-emerald-400 font-semibold ml-2">✓</span>
-            </div>
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>4.</strong> 司馬遷 
-            </div>
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>5.</strong> 鐵木真
-            </div> 
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>6.</strong> 韓愈
-            </div>
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>7.</strong> 比干
-            </div> 
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>8.</strong> 拉瓦節的讀秒模擬器
-            </div>  
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>9.</strong> 董卓 <span class="text-emerald-400 font-semibold ml-2">✓</span>
-            </div>  
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>10.</strong> 趙雲七進七出
-            </div>  
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>11.</strong> 戚夫人
-            </div>  
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>12.</strong> 雙子星大樓
-            </div>   
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>13.</strong> 性感習近平
-            </div>
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>14.</strong> 崇禎
-            </div>
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>15.</strong> 甘迺迪
-            </div>
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>16.</strong> 史達林
-            </div>
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>17.</strong> 方孝孺
-            </div>
-            <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
-              <strong>17.</strong> 希特勒 <span class="text-emerald-400 font-semibold ml-2">✓</span>
-            </div>
-          </div>
-        </div>
-      `
-    };
-
-    const setInfoTab = (tabName) => {
-      infoTabButtons.forEach((button) => {
-        button.classList.toggle('active', button.dataset.tab === tabName);
-      });
-    };
-
-    const openInfoPage = (tabName) => {
-      const pageTitles = {
-        author: '作者介紹',
-        changelog: '更新日誌',
-        plan: '預備開發模擬器順序'
-      };
-
-      if (!infoPage || !infoPageTitle || !infoPageLabel || !infoPageContent) {
-        return;
-      }
-
-      infoPageLabel.textContent = '內頁瀏覽';
-      infoPageTitle.textContent = pageTitles[tabName] || '作者介紹';
-      infoPageContent.innerHTML = infoPanelHtml[tabName] || infoPanelHtml.author;
-      infoPage.classList.remove('hidden');
-      infoPage.classList.add('open');
-    };
-
-    document.addEventListener('click', (event) => {
-      const ritualButton = event.target.closest('#ritual-button');
-      if (!ritualButton) return;
-
-      const ritualSteps = document.getElementById('ritual-steps');
-      if (!ritualSteps) return;
-
-      const isVisible = !ritualSteps.classList.toggle('hidden');
-      ritualButton.textContent = isVisible ? '儀式已啟動' : '啟動開發儀式';
-      ritualButton.classList.toggle('bg-emerald-500/20', isVisible);
-      ritualButton.classList.toggle('text-emerald-200', isVisible);
-    });
-
-    infoTabButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        setInfoTab(button.dataset.tab);
-        openInfoPage(button.dataset.tab);
-      });
-    });
-
-    setInfoTab('author');
-
-
-    infoPageClose?.addEventListener('click', () => {
-      if (!infoPage) return;
-      infoPage.classList.add('hidden');
-      infoPage.classList.remove('open');
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && infoPage && !infoPage.classList.contains('hidden')) {
-        infoPage.classList.add('hidden');
-        infoPage.classList.remove('open');
-      }
-    });
-
-    const closeModalButton = document.getElementById('close-add-site-modal');
-    const addSiteModal = document.getElementById('add-site-modal');
-    const addSiteForm = document.getElementById('add-site-form');
-    const addSiteStatus = document.getElementById('add-site-status');
-
-    const openModal = () => {
-      addSiteModal?.classList.add('is-open');
-      addSiteModal?.classList.remove('hidden');
-      addSiteModal?.classList.add('flex');
-    };
-
-    const closeModal = () => {
-      addSiteModal?.classList.remove('is-open');
-      addSiteModal?.classList.add('hidden');
-      addSiteModal?.classList.remove('flex');
-      if (addSiteForm) {
-        addSiteForm.reset();
-      }
-      if (addSiteStatus) {
-        addSiteStatus.textContent = '新增後會直接出現在主頁卡片下方。';
+  const contactSection = document.getElementById('contact-section');
+  if (contactSection) {
+    const revealContact = () => {
+      const rect = contactSection.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.9) {
+        contactSection.classList.add('is-visible');
       }
     };
 
+    revealContact();
+    window.addEventListener('scroll', revealContact, { passive: true });
+    window.addEventListener('resize', revealContact);
+  }
 
-    openModalButton?.addEventListener('click', openModal);
-    closeModalButton?.addEventListener('click', closeModal);
-    addSiteModal?.addEventListener('click', (event) => {
-      if (event.target === addSiteModal) {
-        closeModal();
-      }
-    });
+  const contactForm = document.getElementById('contact-form');
+  const contactStatus = document.getElementById('contact-status');
+  const recipientEmail = 'xxuege@gmail.com';
 
-    addSiteForm?.addEventListener('submit', async (event) => {
+  if (contactForm && contactStatus) {
+    contactForm.addEventListener('submit', async (event) => {
       event.preventDefault();
 
-      const formData = new FormData(addSiteForm);
-      const title = (formData.get('title') || '').toString().trim();
-      const description = (formData.get('description') || '').toString().trim();
-      const url = (formData.get('url') || '').toString().trim();
-      const tagsInput = (formData.get('tags') || '').toString().trim();
-      const thumbnailFile = formData.get('thumbnail');
-
-      if (!title || !description || !url) {
-        if (addSiteStatus) {
-          addSiteStatus.textContent = '請至少填寫網站連結、名稱與介紹。';
-        }
-        return;
-      }
-
-      const tags = tagsInput
-        .split(',')
-        .map(tag => tag.trim())
-        .filter(Boolean);
-
-      let thumbnailDataUrl = '';
-      if (thumbnailFile && thumbnailFile instanceof File && thumbnailFile.size > 0) {
-        thumbnailDataUrl = await readFileAsDataURL(thumbnailFile);
-      }
-
-      const newSite = {
-        id: slugify(title),
-        title,
-        description,
-        url,
-        iconName: 'globe',
-        tags,
-        thumbnailDataUrl,
-        colorClasses: 'from-violet-500/20 to-fuchsia-600/20 text-violet-500 border-violet-500/30'
+      const formData = new FormData(contactForm);
+      const payload = {
+        name: formData.get('name')?.toString().trim() || '',
+        email: formData.get('email')?.toString().trim() || '',
+        phone: formData.get('phone')?.toString().trim() || '',
+        message: formData.get('message')?.toString().trim() || '',
+        _subject: '新留言來自奇妙模擬器博物館',
+        _captcha: 'false'
       };
 
-      customSimulators = [newSite, ...customSimulators];
-      saveCustomSimulators(customSimulators);
-      renderCurrentView();
+      const submitButton = contactForm.querySelector('button[type="submit"]');
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i data-lucide="loader-circle" class="animate-spin"></i> 發送中...';
+        lucide.createIcons();
+      }
+
+      try {
+        const response = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error('送出失敗');
+        }
+
+        contactStatus.textContent = '訊息已成功送出，感謝你的聯絡。';
+        contactForm.reset();
+      } catch (error) {
+        contactStatus.textContent = '訊息送出時發生問題，請稍後再試。';
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.innerHTML = '<i data-lucide="send"></i> 發送訊息';
+          lucide.createIcons();
+        }
+      }
+    });
+  }
+
+  let customSimulators = [...defaultCustomSimulators, ...loadCustomSimulators()];
+  let removeMode = false;
+
+  const renderCurrentView = () => {
+    renderSimulators(customSimulators, removeMode);
+    document.body.classList.toggle('remove-mode', removeMode);
+  };
+
+  renderCurrentView();
+
+  const infoTabButtons = document.querySelectorAll('#info-panel .info-tab');
+  const infoPage = document.getElementById('info-page');
+  const infoPageTitle = document.getElementById('info-page-title');
+  const infoPageLabel = document.getElementById('info-page-label');
+  const infoPageContent = document.getElementById('info-page-content');
+  const infoPageClose = document.getElementById('info-page-close');
+
+  const infoPanelHtml = {
+    author: `
+      <div class="space-y-4">
+        <div class="grid gap-3 md:grid-cols-[auto_1fr] items-center">
+          <div class="rounded-3xl border border-slate-800 bg-slate-900/70 overflow-hidden aspect-square h-24 w-24 flex items-center justify-center">
+            <img 
+              src="./photos/author.jpg" 
+              alt="作者照片" 
+              class="w-full h-full object-cover" 
+              onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" 
+            />
+            <span class="hidden text-xs uppercase tracking-[0.25em] text-slate-500">作者照片</span>
+          </div>
+          <div class="space-y-1">
+            <p class="text-sm uppercase tracking-[0.25em] text-indigo-300">網站製作</p>
+            <h3 class="text-lg font-semibold text-white">地瓜 / 呂學恩</h3>
+            <p class="text-xs text-slate-500">奇怪模擬器的弄潮者，喜歡把古代人物做成奇怪遊戲。</p>
+          </div>
+        </div>
+        <div class="space-y-2 text-slate-400">
+          <p>這裡是我整理的模擬器合集與怪奇創意實驗室。未來會持續加入更多功能、故事與互動。</p>
+          <p>你可以把這個空間當成我的創作展示櫃，照片與更多介紹會在後續版本補上。</p>
+        </div>
+      </div>
+    `,
+    changelog: `
+      <div class="space-y-3">
+        <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
+          <span class="log-date">2026-09-06</span>
+          <span class="log-detail">新增呂布模擬器</span>
+        </div>
+        <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
+          <span class="log-date">2026-08-20</span>
+          <span class="log-detail">新增董卓模擬器&傾聽網</span>
+        </div>
+        <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
+          <span class="log-date">2026-08-02</span>
+          <span class="log-detail">新增希特勒模擬器</span>
+        </div>
+        <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
+          <span class="log-date">2026-08-01</span>
+          <span class="log-detail">新增晉景公模擬器&新增了網頁類別區分</span>
+        </div>
+        <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
+          <span class="log-date">2026-07-31</span>
+          <span class="log-detail">新增三條線下拉式選單與互動資訊面板。</span>
+          <span class="log-bug">BUG除錯：修正懸停選單消失問題。</span>
+        </div>
+        <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
+          <span class="log-date">2026-07-28</span>
+          <span class="log-detail">新增作者介紹與更新日誌格式展示。</span>
+          <span class="log-bug">BUG除錯：調整小尺寸視窗佈局。</span>
+        </div>
+        <div class="log-entry rounded-2xl border border-slate-800 bg-slate-950/80 p-3">
+          <span class="log-date">2026-07-20</span>
+          <span class="log-detail">提高主頁卡片互動感，加入光暈效果。</span>
+          <span class="log-bug">BUG除錯：修正圖片載入閃爍。</span>
+        </div>
+      </div>
+    `,
+    plan: `
+      <div class="space-y-4">
+        <p class="text-slate-400">以下為留言區我看到的預計製作名單，實際製作未來將透過抽籤決定</p>
+        <button id="ritual-button" type="button" class="ritual-button inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-indigo-500/20 bg-indigo-500/10 px-4 py-3 text-sm font-medium text-indigo-200 transition hover:bg-indigo-500/20">
+          <span>公布預計開發項目</span>
+        </button>
+        <div id="ritual-steps" class="ritual-steps hidden space-y-3 pt-2">
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>1.</strong> 科比模擬器 
+          </div>
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>2.</strong> 俞鴻圖 
+          </div>
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>3.</strong> 李斯 <span class="text-emerald-400 font-semibold ml-2">✓</span>
+          </div>
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>4.</strong> 司馬遷 
+          </div>
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>5.</strong> 鐵木真
+          </div> 
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>6.</strong> 韓愈
+          </div>
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>7.</strong> 比干
+          </div> 
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>8.</strong> 拉瓦節的讀秒模擬器
+          </div>  
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>9.</strong> 董卓 <span class="text-emerald-400 font-semibold ml-2">✓</span>
+          </div>  
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>10.</strong> 趙雲七進七出
+          </div>  
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>11.</strong> 戚夫人
+          </div>  
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>12.</strong> 雙子星大樓
+          </div>   
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>13.</strong> 性感習近平
+          </div>
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>14.</strong> 崇禎
+          </div>
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>15.</strong> 甘迺迪
+          </div>
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>16.</strong> 史達林
+          </div>
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>17.</strong> 方孝孺
+          </div>
+          <div class="plan-step rounded-2xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-300">
+            <strong>18.</strong> 希特勒 <span class="text-emerald-400 font-semibold ml-2">✓</span>
+          </div>
+        </div>
+      </div>
+    `
+  };
+
+  const setInfoTab = (tabName) => {
+    infoTabButtons.forEach((button) => {
+      button.classList.toggle('active', button.dataset.tab === tabName);
+    });
+  };
+
+  const openInfoPage = (tabName) => {
+    const pageTitles = {
+      author: '作者介紹',
+      changelog: '更新日誌',
+      plan: '預備開發模擬器順序'
+    };
+
+    if (!infoPage || !infoPageTitle || !infoPageLabel || !infoPageContent) {
+      return;
+    }
+
+    infoPageLabel.textContent = '內頁瀏覽';
+    infoPageTitle.textContent = pageTitles[tabName] || '作者介紹';
+    infoPageContent.innerHTML = infoPanelHtml[tabName] || infoPanelHtml.author;
+    infoPage.classList.remove('hidden');
+    infoPage.classList.add('open');
+  };
+
+  document.addEventListener('click', (event) => {
+    const ritualButton = event.target.closest('#ritual-button');
+    if (!ritualButton) return;
+
+    const ritualSteps = document.getElementById('ritual-steps');
+    if (!ritualSteps) return;
+
+    const isVisible = !ritualSteps.classList.toggle('hidden');
+    ritualButton.textContent = isVisible ? '儀式已啟動' : '啟動開發儀式';
+    ritualButton.classList.toggle('bg-emerald-500/20', isVisible);
+    ritualButton.classList.toggle('text-emerald-200', isVisible);
+  });
+
+  infoTabButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      setInfoTab(button.dataset.tab);
+      openInfoPage(button.dataset.tab);
+    });
+  });
+
+  setInfoTab('author');
+
+  infoPageClose?.addEventListener('click', () => {
+    if (!infoPage) return;
+    infoPage.classList.add('hidden');
+    infoPage.classList.remove('open');
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && infoPage && !infoPage.classList.contains('hidden')) {
+      infoPage.classList.add('hidden');
+      infoPage.classList.remove('open');
+    }
+  });
+
+  // 安全抓取所有 Modal 相關 DOM 元素
+  const openModalButton = document.getElementById('open-add-site-modal');
+  const closeModalButton = document.getElementById('close-add-site-modal');
+  const addSiteModal = document.getElementById('add-site-modal');
+  const addSiteForm = document.getElementById('add-site-form');
+  const addSiteStatus = document.getElementById('add-site-status');
+
+  const openModal = () => {
+    addSiteModal?.classList.add('is-open');
+    addSiteModal?.classList.remove('hidden');
+    addSiteModal?.classList.add('flex');
+  };
+
+  const closeModal = () => {
+    addSiteModal?.classList.remove('is-open');
+    addSiteModal?.classList.add('hidden');
+    addSiteModal?.classList.remove('flex');
+    if (addSiteForm) {
+      addSiteForm.reset();
+    }
+    if (addSiteStatus) {
+      addSiteStatus.textContent = '新增後會直接出現在主頁卡片下方。';
+    }
+  };
+
+  openModalButton?.addEventListener('click', openModal);
+  closeModalButton?.addEventListener('click', closeModal);
+  addSiteModal?.addEventListener('click', (event) => {
+    if (event.target === addSiteModal) {
       closeModal();
+    }
+  });
 
+  addSiteForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(addSiteForm);
+    const title = (formData.get('title') || '').toString().trim();
+    const description = (formData.get('description') || '').toString().trim();
+    const url = (formData.get('url') || '').toString().trim();
+    const tagsInput = (formData.get('tags') || '').toString().trim();
+    const thumbnailFile = formData.get('thumbnail');
+
+    if (!title || !description || !url) {
       if (addSiteStatus) {
-        addSiteStatus.textContent = '網站已新增，正在更新主頁。';
+        addSiteStatus.textContent = '請至少填寫網站連結、名稱與介紹。';
       }
-    });
+      return;
+    }
 
-    document.addEventListener('click', (event) => {
-      const removeButton = event.target.closest('.remove-button');
-      if (!removeButton) {
-        return;
-      }
+    const tags = tagsInput
+      .split(',')
+      .map(tag => tag.trim())
+      .filter(Boolean);
 
-      const card = removeButton.closest('.simulator-card');
-      const title = card?.querySelector('h3')?.textContent?.trim();
-      const confirmed = window.confirm(`確定要刪除「${title || '這個網站'}」嗎？`);
-      if (!confirmed) {
-        return;
-      }
+    let thumbnailDataUrl = '';
+    if (thumbnailFile && thumbnailFile instanceof File && thumbnailFile.size > 0) {
+      thumbnailDataUrl = await readFileAsDataURL(thumbnailFile);
+    }
 
-      const currentIndex = Array.from(document.querySelectorAll('#simulators-grid .simulator-card')).indexOf(card);
-      const allSimulators = [...simulators, ...customSimulators];
-      const target = allSimulators[currentIndex];
-      if (!target) {
-        return;
-      }
+    const newSite = {
+      id: slugify(title),
+      title,
+      description,
+      url,
+      iconName: 'globe',
+      tags,
+      thumbnailDataUrl,
+      colorClasses: 'from-violet-500/20 to-fuchsia-600/20 text-violet-500 border-violet-500/30'
+    };
 
-      if (target.id && !simulators.some(item => item.id === target.id)) {
-        customSimulators = customSimulators.filter(item => item.id !== target.id);
-      }
+    customSimulators = [newSite, ...customSimulators];
+    saveCustomSimulators(customSimulators);
+    renderCurrentView();
+    closeModal();
 
-      saveCustomSimulators(customSimulators);
-      renderCurrentView();
-    });
+    if (addSiteStatus) {
+      addSiteStatus.textContent = '網站已新增，正在更新主頁。';
+    }
+  });
 
-    // 渲染 Lucide Icons
-    lucide.createIcons();
+  document.addEventListener('click', (event) => {
+    const removeButton = event.target.closest('.remove-button');
+    if (!removeButton) {
+      return;
+    }
+
+    const card = removeButton.closest('.simulator-card');
+    const title = card?.querySelector('h3')?.textContent?.trim();
+    const confirmed = window.confirm(`確定要刪除「${title || '這個網站'}」嗎？`);
+    if (!confirmed) {
+      return;
+    }
+
+    const currentIndex = Array.from(document.querySelectorAll('#simulators-grid .simulator-card')).indexOf(card);
+    const allSimulators = [...simulators, ...customSimulators];
+    const target = allSimulators[currentIndex];
+    if (!target) {
+      return;
+    }
+
+    if (target.id && !simulators.some(item => item.id === target.id)) {
+      customSimulators = customSimulators.filter(item => item.id !== target.id);
+    }
+
+    saveCustomSimulators(customSimulators);
+    renderCurrentView();
+  });
+
+  // 渲染 Lucide Icons
+  lucide.createIcons();
 });
