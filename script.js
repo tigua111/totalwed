@@ -163,6 +163,15 @@ const defaultCustomSimulators = [
     iconName: 'history',
     tags: ['大學', '修課', '老師'],
     colorClasses: 'from-cyan-500/20 to-teal-600/20 text-cyan-500 border-cyan-500/30'
+  },
+  {
+    id: 'game',
+    title: '搖擺衝刺',
+    description: '腳不是你的模擬器',
+    url: 'https://wobblerun.manus-game-showcase.com/',
+    iconName: 'history',
+    tags: ['遊戲', '獵奇', '搞笑'],
+    colorClasses: 'from-cyan-500/20 to-teal-600/20 text-cyan-500 border-cyan-500/30'
   }
 ];
 
@@ -276,7 +285,8 @@ function attachCardImage(card, sim) {
     'dongzhuo': '董卓',
     'lision': '傾聽網',
     'school': '校評集',
-    'lubo': '呂布'
+    'lubo': '呂布',
+    'game': '搖擺衝刺'
   };
 
   const candidates = [];
